@@ -70,12 +70,12 @@ describe "Goals" do
   end
 
   describe "deleting" do
-    it "should show a destroy button on the show page" do
+    it "shows a destroy button on the show page" do
       visit goal_url(Goal.last)
       expect(page).to have_button("Delete")
     end
 
-    it "should only show the destroy button for the goal's user" do
+    it "only shows the destroy button for the goal's user" do
       FactoryGirl.create(:user)
       FactoryGirl.create(:goal, user: User.last)
 
@@ -89,7 +89,31 @@ describe "Goals" do
       click_on "Delete"
       expect(page).to_not have_content(goal.content)
     end
-
   end
 
+  describe "completing goals" do
+    before(:each) do
+      goal = Goal.last
+      visit goal_url(goal)
+    end
+
+    it "initializes goals as incomplete" do
+      expect(page).to have_content("Incomplete")
+      expect(page).to_not have_content("Complete")
+    end
+
+    it "shows a complete button on incomplete goals" do
+      expect(page).to have_button("Complete")
+    end
+
+    it "updates a goal to complete when clicked" do
+      click_on 'Complete'
+      expect(page).to_not have_content("Incomplete")
+      expect(page).to have_content("Complete")
+    end
+  end
+
+  # describe "viewing user goals" do
+  #   it "should show "
+  # end
 end

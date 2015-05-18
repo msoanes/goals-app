@@ -1,0 +1,8 @@
+<h2>Profile</h1>
+<%= @user.username %>
+
+<h3>Incomplete</h3>
+<%= render @user.incomplete_goals(current_user) %>
+
+<h3>Complete</h3>
+<%= render @user.complete_goals(current_user) %>

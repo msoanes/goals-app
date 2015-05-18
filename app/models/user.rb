@@ -32,6 +32,16 @@ class User < ActiveRecord::Base
     Goal.where("user_id = ? OR is_private = false", id)
   end
 
+  def complete_goals(user)
+    g = goals.where(is_complete: true)
+    user == self ? g : g.where(is_private: false)
+  end
+
+  def incomplete_goals(user)
+    g = goals.where(is_complete: false)
+    user == self ? g : g.where(is_private: false)
+  end
+
   private
 
   def ensure_session_token

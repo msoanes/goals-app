@@ -9,6 +9,12 @@ class GoalsController < ApplicationController
     @goal = Goal.new
   end
 
+  def complete
+    @goal = Goal.find(params[:id])
+    @goal.mark_complete!
+    redirect_to @goal
+  end
+
   def create
     @goal = current_user.goals.new(goal_params)
     if @goal.save
@@ -31,6 +37,7 @@ class GoalsController < ApplicationController
 
   def edit
     @goal = Goal.find(params[:id])
+    redirect_to @goal if @goal.user != current_user
   end
 
   def update

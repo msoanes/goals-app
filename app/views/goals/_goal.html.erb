@@ -1,9 +1,18 @@
 <hr>
 <%= goal.user == current_user ? "<em>".html_safe : '' %>
-  <h3><%= goal.content %><br>
+  <h3><%= link_to goal.content, goal %><br>
     <small>
-      By: <%= goal.user.username %>
+      By: <%= link_to goal.user.username, goal.user %>
       <%= '(private)' if goal.is_private %>
     </small>
   </h3>
 <%= goal.user == current_user ? "</em>".html_safe : '' %>
+
+<% if goal.complete? %>
+  <p><strong>Completed</strong></p>
+<% else %>
+  <% if goal.user == current_user %>
+    <%= button_to "Complete Goal", complete_goal_url(goal) %>
+  <% end %>
+  <p><strong>Incomplete</strong></p>
+<% end %>
