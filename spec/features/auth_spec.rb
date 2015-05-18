@@ -46,7 +46,7 @@ end
 describe "logging out" do
   it "begins with logged out state" do
     visit goals_url
-    expect(page).to have_content "Log in"
+    expect(page).to have_content "Sign in"
     expect(page).to_not have_content "Log out"
   end
 
