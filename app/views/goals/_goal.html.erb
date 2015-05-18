@@ -1,0 +1,9 @@
+<hr>
+<%= goal.user == current_user ? "<em>".html_safe : '' %>
+  <h3><%= goal.content %><br>
+    <small>
+      By: <%= goal.user.username %>
+      <%= '(private)' if goal.is_private %>
+    </small>
+  </h3>
+<%= goal.user == current_user ? "</em>".html_safe : '' %>

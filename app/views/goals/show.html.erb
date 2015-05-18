@@ -1,0 +1,6 @@
+<%= render @goal %>
+
+<% if @goal.user == current_user %>
+  <%= link_to "Edit Goal", edit_goal_url(@goal) %>
+  <%= button_to "Delete", goal_url(@goal), method: :delete %>
+<% end %>

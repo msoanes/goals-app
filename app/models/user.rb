@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   validates :username, :password_digest, :session_token, presence: true
   validates :password, length: { minimum: 6, allow_nil: true }
 
+  has_many :goals
+
   attr_reader :password
 
   after_initialize :ensure_session_token
@@ -24,6 +26,10 @@ class User < ActiveRecord::Base
     self.session_token = gen_token
     save
     session_token
+  end
+
+  def viewable_goals
+    Goal.where("user_id = ? OR is_private = false", id)
   end
 
   private
