@@ -8,15 +8,10 @@ describe "the signup process" do
   end
 
   feature "signing up a user" do
-    before(:each) do
-      visit new_user_url
-      fill_in 'Username', with: "user1234"
-      fill_in 'Password', with: "password"
-      click_on "Create User"
-    end
 
     it "shows username on the homepage after signup" do
-      expect(page).to have_content "user1234"
+      username, = create_user
+      expect(page).to have_content username
     end
 
   end
@@ -27,18 +22,15 @@ describe "logging in" do
 
   it "shows username on the homepage after login" do
     # Put this into a helper method!
-    visit new_user_url
-    fill_in 'Username', with: "user1234"
-    fill_in 'Password', with: "password"
-    click_on "Create User"
+    username, password = create_user
     click_on "Log out"
 
     visit new_session_url
-    fill_in 'Username', with: "user1234"
-    fill_in 'Password', with: "password"
+    fill_in 'Username', with: username
+    fill_in 'Password', with: password
     click_on "Log in"
 
-    expect(page).to have_content "user1234"
+    expect(page).to have_content username
   end
 
 end
@@ -51,10 +43,7 @@ describe "logging out" do
   end
 
   it "doesn't show username on the homepage after logout" do
-    visit new_user_url
-    fill_in 'Username', with: "user1234"
-    fill_in 'Password', with: "password"
-    click_on "Create User"
+    create_user
     click_on "Log out"
 
     expect(page).to_not have_content "user1234"

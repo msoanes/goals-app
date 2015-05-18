@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :user do
-    username "MyString"
-session_token "MyString"
-password_digest "MyString"
+    username { Faker::Internet.user_name }
+    session_token nil
+    password_digest { BCrypt::Password.create("password") }
   end
 
 end
